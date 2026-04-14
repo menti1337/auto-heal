@@ -10,6 +10,8 @@ module.exports = function AutoHeal(mod) {
         glyphs = null;
     
     mod.command.add('autoheal', (p1)=> {
+		//Debug
+		console.log('[auto-heal] command received, p1:', p1);
         if (p1) p1 = p1.toLowerCase();
         if (p1 == null) {
             mod.settings.autoHeal = !mod.settings.autoHeal;
@@ -65,7 +67,11 @@ module.exports = function AutoHeal(mod) {
     });
         
     mod.game.on('enter_game', () => { 
+	//debug
+	console.log('[auto-heal] enter_game fired, templateId:', mod.game.me.templateId);
         job = (mod.game.me.templateId - 10101) % 100;
+		//Debug
+		console.log('[auto-heal] job:', job, 'skills defined:', !!mod.settings.skills[job]);
         (mod.settings.skills[job]) ? load() : unload();
     })
        
@@ -84,10 +90,11 @@ module.exports = function AutoHeal(mod) {
     function load() {
         if (!hooks.length) {
             
-            hook('S_PARTY_MEMBER_LIST', 7, (event) => {             
+            hook('S_PARTY_MEMBER_LIST', 9, (event) => {             
                 const copy = partyMembers;          
-                partyMembers = event.members.filter(m => m.playerId != mod.game.me.playerId); // remove self from targets
-                
+                partyMembers = event.members.filter(m => m.playerId != mod.game.me.playerId).map(m => Object.assign(m, {online: true, alive: true, hpP: 100})); // remove self from targets
+                //Debug
+				console.log('[auto-heal] partyMembers:', partyMembers.map(m => m.name + ' gameId:' + m.gameId + ' online:' + m.online + ' hp:' + m.hpP));
                 // restore missing gameIds. sometimes gameIds are 0 since 64-bit patch
                 if (copy) {
                     for(let i = 0; i < partyMembers.length; i++) {
@@ -113,7 +120,7 @@ module.exports = function AutoHeal(mod) {
                 playerLocation.w = event.w;
             })
             
-            hook('S_SPAWN_USER', 15, (event) => {
+            hook('S_SPAWN_USER', 17, (event) => {
                 if (partyMembers.length != 0) {
                     let member = partyMembers.find(m => m.playerId === event.playerId);
                     if (member) {
@@ -125,18 +132,18 @@ module.exports = function AutoHeal(mod) {
                 }
             })
             
-            hook('S_USER_LOCATION', 5, (event) => {     
-                let member = partyMembers.find(m => m.gameId === event.gameId);
+            hook('S_USER_LOCATION', 6, (event) => {     
+                let member = partyMembers.find(m => String(m.gameId) === String(event.gameId));
                 if (member) member.loc = event.loc;
             })
             
             hook('S_USER_LOCATION_IN_ACTION', 2, (event) => {
-                let member = partyMembers.find(m => m.gameId === event.gameId);
+                let member = partyMembers.find(m => String(m.gameId) === String(event.gameId));
                 if (member) member.loc = event.loc;
             })
             
             hook('S_INSTANT_DASH', 3, (event) => {
-                let member = partyMembers.find(m => m.gameId === event.gameId);
+                let member = partyMembers.find(m => String(m.gameId) === String(event.gameId));
                 if (member) member.loc = event.loc;
             })
             
@@ -148,17 +155,17 @@ module.exports = function AutoHeal(mod) {
                 }
             })
             
-            hook('S_PARTY_MEMBER_STAT_UPDATE', 3, (event) => {
+            hook('S_PARTY_MEMBER_STAT_UPDATE', 4, (event) => {
                 if (mod.game.me.playerId == event.playerId) return;
                 let member = partyMembers.find(m => m.playerId === event.playerId);
                 if (member) {
-                    member.hpP = (Number(event.curHp) / Number(event.maxHp)) * 100;    
+                    member.hpP = (Number(event.hp) / Number(event.maxHp)) * 100;    
                     member.alive = event.alive;
                 }
             })
             
             hook('S_DEAD_LOCATION', 2, (event) => {
-                let member = partyMembers.find(m => (m.gameId === event.gameId));
+                let member = partyMembers.find(m => String(m.gameId) === String(event.gameId));
                 if (member) {
                     member.loc = event.loc;
                     member.hpP = 0;
@@ -185,7 +192,8 @@ module.exports = function AutoHeal(mod) {
                     playerLocation.w = event.w;
                 }
                 let skill = Math.floor(event.skill.id / 10000);
-                
+                console.log('[auto-heal] C_START_SKILL skill:', skill, 'inList:', !!(mod.settings.skills[job] && mod.settings.skills[job].includes(skill)), 'autoHeal:', mod.settings.autoHeal, 'glyphs:', !!glyphs);
+
                 if(mod.settings.skills[job] && mod.settings.skills[job].includes(skill)) {
                     if (skill != 9 && !mod.settings.autoHeal) return; // skip heal if disabled
                     if (skill == 9 && !mod.settings.autoCleanse) return; // skip cleanse if disabled
@@ -196,6 +204,8 @@ module.exports = function AutoHeal(mod) {
                     
                     if (skill != 9) sortHp();
                     for (let i = 0, n = partyMembers.length; i < n; i++) {
+                        let m = partyMembers[i];
+                        console.log('[auto-heal] checking', m.name, 'online:', m.online, 'alive:', m.alive, 'hpP:', m.hpP, 'hasLoc:', !!m.loc, 'dist:', (m.loc && playerLocation.loc) ? (m.loc.dist3D(playerLocation.loc) / 25).toFixed(1) : 'n/a');
                         if (partyMembers[i].online &&
                             partyMembers[i].alive &&
                             partyMembers[i].hpP != undefined &&
