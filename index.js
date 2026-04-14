@@ -10,8 +10,6 @@ module.exports = function AutoHeal(mod) {
         glyphs = null;
     
     mod.command.add('autoheal', (p1)=> {
-		//Debug
-		console.log('[auto-heal] command received, p1:', p1);
         if (p1) p1 = p1.toLowerCase();
         if (p1 == null) {
             mod.settings.autoHeal = !mod.settings.autoHeal;
@@ -67,11 +65,7 @@ module.exports = function AutoHeal(mod) {
     });
         
     mod.game.on('enter_game', () => { 
-	//debug
-	console.log('[auto-heal] enter_game fired, templateId:', mod.game.me.templateId);
         job = (mod.game.me.templateId - 10101) % 100;
-		//Debug
-		console.log('[auto-heal] job:', job, 'skills defined:', !!mod.settings.skills[job]);
         (mod.settings.skills[job]) ? load() : unload();
     })
        
@@ -93,8 +87,6 @@ module.exports = function AutoHeal(mod) {
             hook('S_PARTY_MEMBER_LIST', 9, (event) => {             
                 const copy = partyMembers;          
                 partyMembers = event.members.filter(m => m.playerId != mod.game.me.playerId).map(m => Object.assign(m, {online: true, alive: true, hpP: 100})); // remove self from targets
-                //Debug
-				console.log('[auto-heal] partyMembers:', partyMembers.map(m => m.name + ' gameId:' + m.gameId + ' online:' + m.online + ' hp:' + m.hpP));
                 // restore missing gameIds. sometimes gameIds are 0 since 64-bit patch
                 if (copy) {
                     for(let i = 0; i < partyMembers.length; i++) {
