@@ -2,11 +2,11 @@
   "files": {
     "config.json": {
         "overwrite": false,
-        "hash": "69c206298dd7705762e602b1bed66cd9a13aa90e9c6ba6900f486956dd59c8e2"
+        "hash": "5c52fc1d0f04039b79d98bc7d3b8af496b73a93c72c4697e433b09898aceece0"
     },
-    "index.js": "50afce6bef0c40e75f2b2cae06b236151329b9c61d9450bc20324ccbd18c27b2",
-    "module.json": "d21df02f2d9406d01c11514ba88437d801dcfb31ec8911af9f94a5f1b344a3ec",
-    "settings_migrator.js": "457017eb5eb7f9cd6ee1dd0b463082e62a401724af7ba84b60d0c1dc822786cf"
+    "index.js": "fd77ae99de5bdfe62ba2ee22abd98ed281eebf002252056c9d9929f5c017f566",
+    "module.json": "b2846e10248fb92c68010dc9b40fcece3cd9f7fdd75c33211b26e0a7272cbdbd",
+    "settings_migrator.js": "cd82c5758fcefdb9d6f56e3efe15095a5d72f4aacb59ef09085e0f7d823bbc41"
   },
   "defs": {
     "C_CAN_LOCKON_TARGET": 3,
@@ -21,11 +21,11 @@
     "S_LEAVE_PARTY_MEMBER": 2,
     "S_LOGOUT_PARTY_MEMBER": 1,
     "S_PARTY_MEMBER_CHANGE_HP": 4,    
-    "S_PARTY_MEMBER_LIST": 7,
-    "S_PARTY_MEMBER_STAT_UPDATE": 3,    
+    "S_PARTY_MEMBER_LIST": 9,
+    "S_PARTY_MEMBER_STAT_UPDATE": 4,   
     "S_SPAWN_ME": 3,
-    "S_SPAWN_USER": 15,
-    "S_USER_LOCATION": 5,
+    "S_SPAWN_USER": 17,
+    "S_USER_LOCATION": 6,
     "S_USER_LOCATION_IN_ACTION": 2
   }
 }
