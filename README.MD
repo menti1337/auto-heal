@@ -1,5 +1,5 @@
 # auto-heal
-Skip lockons and instantly heals/cleanses party members.
+Skip lockons for heals/cleanses on party members.
 Required: https://github.com/menti1337/HOTFIX_Starscape_Toolbox
 
 ## Info
