@@ -14,8 +14,8 @@
         "autoCast": true,
         "autoHeal": true,
         "autoCleanse": true,
-        "hpCutoff": 97,
-        "maxDistance": 35,
+        "hpCutoff": 95,
+        "maxDistance": 27,
         "lockSpeed": 30,
         "castSpeed": 100
     }
