@@ -1,5 +1,6 @@
 # auto-heal
 Skip lockons and instantly heals/cleanses party members.
+Required: https://github.com/menti1337/HOTFIX_Starscape_Toolbox
 
 ## Info
 - Skills will instantly lockon and heal/cleanse party members. Heals prioritize the lowest HP.
