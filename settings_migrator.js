@@ -15,8 +15,8 @@ const DefaultSettings = {
     "autoCast": true,     // true = skills auto lockon and cast. false = pre-lockon onto targets and casting is done manually
     "autoHeal": true,     // enable healing skills
     "autoCleanse": true,  // enable mystic cleanse
-    "hpCutoff": 97,       // (healing only) ignore members that have more HP% than this
-    "maxDistance": 35,    // in-game meters. can work up to 35m
+    "hpCutoff": 95,       // (healing only) ignore members that have more HP% than this
+    "maxDistance": 27,    // in-game meters. can work up to 35m
     "lockSpeed": 30,       // delay for locking on targets.
     "castSpeed": 100       // delay for casting skills. castSpeed needs to be greater than lockSpeed.
 }
