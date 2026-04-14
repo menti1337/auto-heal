@@ -20,7 +20,7 @@ Required: https://github.com/menti1337/HOTFIX_Starscape_Toolbox
 - Default is on
 ### `autoheal [HP]`
 - Set cutoff for healing. ('autoheal 50' = ignore members with >50% HP. Set to 100 to always heal)
-- Default cutoff is 97%
+- Default cutoff is 95%
 ### `autocleanse` [on/off]`
 - Enables/disables auto-cleansing
 - Default is on
