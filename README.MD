@@ -4,7 +4,7 @@ Skip lockons and instnant heals/cleanses party members.
 
 Required: https://github.com/menti1337/HOTFIX_Starscape_Toolbox
 
-!! This Mod is not allowed on Tera Starscape. Use on own Risk !!!
+!! This Mod is not allowed on Tera Starscape !!!
 
 ## Info
 - Skills will instantly lockon and heal/cleanse party members. Heals prioritize the lowest HP.
