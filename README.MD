@@ -2,7 +2,7 @@
 Skip lockons and instant heals/cleanses party members. 
 (you need to press the skill button manually)
 
-Required: https://github.com/menti1337/HOTFIX_Starscape_Toolbox
+Required: https://github.com/menti1337/HOTFIX_Toolbox
 
 !! This Mod is not allowed on Tera Starscape !!!
 
